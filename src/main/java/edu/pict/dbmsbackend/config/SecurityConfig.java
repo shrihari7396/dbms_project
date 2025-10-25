@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -44,18 +45,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                //         .requestMatchers("/api/auth/**").permitAll()
-                //         .requestMatchers("/api/cars").permitAll()
-                //         .requestMatchers("/api/cars/*").permitAll()
-                //         .requestMatchers("/api/cars/*/reviews").permitAll()
-                //         .requestMatchers("/swagger-ui/*").permitAll()
-                //         .requestMatchers("/api/bookings").hasAnyRole("CUSTOMER", "ADMIN")
-                //         .requestMatchers("/api/cars", "POST").hasAnyRole("OWNER", "ADMIN")
-                //         .requestMatchers("/api/cars/*", "PUT").hasAnyRole("OWNER", "ADMIN")
-                //         .requestMatchers("/api/cars/*", "DELETE").hasAnyRole("OWNER", "ADMIN")
-                //         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                         .requestMatchers("/api/auth/**").permitAll()
+                         .requestMatchers("/api/cars").permitAll()
+                         .requestMatchers("/api/cars/*").permitAll()
+                         .requestMatchers("/api/cars/*/reviews").permitAll()
+                         .requestMatchers("/swagger-ui/*").permitAll()
+                         .requestMatchers("/api/bookings").hasAnyRole("CUSTOMER", "ADMIN")
+                         .requestMatchers("/api/cars", "POST").hasAnyRole("OWNER", "ADMIN")
+                         .requestMatchers("/api/cars/*", "PUT").hasAnyRole("OWNER", "ADMIN")
+                         .requestMatchers("/api/cars/*", "DELETE").hasAnyRole("OWNER", "ADMIN")
+                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
@@ -66,16 +66,4 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-        
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        return source;
-    }
 }

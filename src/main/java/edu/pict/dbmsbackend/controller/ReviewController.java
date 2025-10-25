@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cars/{carId}/reviews")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ReviewController {
 
     private final ReviewService reviewService;

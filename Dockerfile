@@ -28,7 +28,7 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
 # Expose Service port
-EXPOSE 8082
+EXPOSE 8081
 
 # Set environment variable (optional)
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
